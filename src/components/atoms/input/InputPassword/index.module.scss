@@ -1,0 +1,30 @@
+.input_password {
+  display: flex;
+  align-items: center;
+  height: 59px;
+  background-color: #ffffff;
+  border: 0.6px solid;
+  border-color: #282828;
+  border-radius: 6px;
+  padding-inline: 27px;
+
+  button {
+    border: none;
+    background-color: #ffffff;
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      color: #ababab;
+      font-family: "Pretendard-Light", Helvetica;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: normal;
+      position: fixed;
+    }
+  }
+}
