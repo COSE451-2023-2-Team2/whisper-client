@@ -1,7 +1,5 @@
 import ButtonBase from "@/components/atoms/button/ButtonBase";
 import s from "./index.module.scss";
-import InputId from "@/components/atoms/input/InputId";
-import InputPassword from "@/components/atoms/input/InputPassword";
 import LoginInput from "../LoginInput";
 import ButtonLoginSwitch from "@/components/atoms/button/ButtonLoginSwitch";
 

@@ -1,52 +1,49 @@
 .login_box {
   display: flex;
   flex-direction: column;
-  height: 757px;
-  width: 505px;
+  height: 600px;
+  width: 400px;
   background-color: #ffffff;
-  border: 0.5px solid;
-  border-color: #868686;
+  border: 0.5px solid #868686;
   border-radius: 10px;
   box-shadow: 0px 4px 64px #0000000d;
-  height: 757px;
-  width: 505px;
-  padding: 36px 35px;
+  padding: 30px 30px;
+  margin-right: 37px;
+  margin-top: 44px;
 }
 
-.login_welcome {
-  color: #000;
-  font-family: Pretendard;
-  font-size: 25px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 35px;
-}
-
-.login_title {
-  color: #000;
-  font-family: Pretendard;
-  font-size: 31px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  margin-bottom: 11px;
-}
-
+.login_welcome,
+.login_title,
 .login_description {
   color: #000;
   font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
+}
+
+.login_welcome {
+  font-size: 23px;
   font-weight: 400;
   line-height: normal;
-  margin-bottom: 53px;
+  margin-bottom: 29px;
+}
+
+.login_title {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 7px;
+}
+
+.login_description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 39px;
 }
 
 .login_input {
-  margin-bottom: 41px;
+  margin-bottom: 69.5px;
 }
 
 .login_register {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }

@@ -20,7 +20,7 @@ export default function InputPassword(props: InputPasswordProps) {
         <Image
           src={isVisible ? Visible : Invisible}
           alt="Visible Icon"
-          width={21}
+          width={17}
         ></Image>
       </button>
     </div>
