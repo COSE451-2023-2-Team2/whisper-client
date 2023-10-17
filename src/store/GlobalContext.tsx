@@ -1,17 +1,15 @@
 import { createContext, useState } from "react";
-import { GlobalContextType } from "./GlobalContext.d";
+import { AuthContextType } from "./GlobalContext.d";
 
-export const GlobalContext = createContext<GlobalContextType>({});
+export const AuthContext = createContext<AuthContextType>({});
 
-export default function GlobalContextProvider(props: {
+export default function GlobalStateContext(props: {
   children: React.ReactNode | null;
 }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const value = { isLoggedIn, setIsLoggedIn };
 
   return (
-    <GlobalContext.Provider value={value}>
-      {props.children}
-    </GlobalContext.Provider>
+    <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
   );
 }
