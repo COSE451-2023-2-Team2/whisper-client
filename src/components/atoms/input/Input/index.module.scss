@@ -27,13 +27,14 @@
 
   button {
     border: none;
-    background-color: #ffffff;
+    background-color: #ffffff00;
   }
 
   input {
     width: 90%;
     border: none;
     outline: none;
+    background-color: #ffffff00;
 
     &::placeholder {
       color: #ababab;
@@ -44,4 +45,9 @@
       position: fixed;
     }
   }
+}
+
+.input_box.invalid {
+  border-color: #ff0000;
+  background-color: #ffa8a866;
 }

@@ -4,7 +4,11 @@ import Button from "../Button";
 
 export default function ButtonSubmit(props: ComponentProps<typeof Button>) {
   return (
-    <Button className={s.button_base} onClick={props.onClick}>
+    <Button
+      className={s.button_base}
+      disabled={props.disabled}
+      onClick={props.onClick}
+    >
       {props.name}
     </Button>
   );

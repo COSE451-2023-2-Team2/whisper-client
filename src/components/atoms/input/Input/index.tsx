@@ -7,23 +7,28 @@ import Visible from "@/public/assets/visible.png";
 
 export default function Input(props: InputProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const boxClassName = `${s.input_box} ${
+    props.isCorrect === false ? s.invalid : ""
+  }`;
 
   return (
     <div className={s.input_id}>
       <label htmlFor={props.id}>{props.label}</label>
       {props.type === "text" ? (
-        <div className={s.input_box}>
+        <div className={boxClassName}>
           <input
             id={props.id}
             type={props.type}
             placeholder={props.value}
+            onChange={props.onChange}
           ></input>
         </div>
       ) : (
-        <div className={s.input_box}>
+        <div className={boxClassName}>
           <input
             placeholder={props.value}
             type={isPasswordVisible ? "text" : "password"}
+            onChange={props.onChange}
           ></input>
           <button onClick={() => setIsPasswordVisible(!isPasswordVisible)}>
             <Image

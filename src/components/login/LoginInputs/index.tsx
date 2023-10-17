@@ -29,7 +29,7 @@ export default function LoginInputs() {
           value="Enter your password"
         ></Input>
       </div>
-      <div className={s.login_register}>
+      <div className={s.login_button}>
         <ButtonSubmit name="Login" onClick={submitHandler}></ButtonSubmit>
       </div>
     </Fragment>

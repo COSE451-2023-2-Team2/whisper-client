@@ -5,6 +5,7 @@ import Input from "@/components/atoms/input/Input";
 import { FormEvent, useContext, useState } from "react";
 import { AuthContext } from "@/store/GlobalContext";
 import LoginInputs from "@/components/login/LoginInputs";
+import RegisterInputs from "@/components/login/RegisterInputs";
 
 export default function LoginBox() {
   const [registerState, setRegisterState] = useState(false);
@@ -26,7 +27,7 @@ export default function LoginBox() {
       <div className={s.login_description}>
         Your first anonymous group chat for class :0
       </div>
-      {!registerState ? <LoginInputs /> : "REGISTER"}
+      {!registerState ? <LoginInputs /> : <RegisterInputs />}
       <ButtonLoginSwitch
         isLoginToRegister={!registerState}
         onClick={changeLoginState}
