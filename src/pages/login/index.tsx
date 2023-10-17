@@ -2,7 +2,7 @@ import LoginBox from "@/components/login/LoginBox";
 import s from "./index.module.scss";
 import Background from "@/public/assets/background.png";
 import Image from "next/image";
-import Header from "@/components/header/Header";
+import Header from "@/components/layouts/Header";
 
 export default function Login() {
   return (

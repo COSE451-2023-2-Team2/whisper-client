@@ -31,7 +31,7 @@ export default function LoginBox() {
         ></Input>
       </div>
       <div className={s.login_register}>
-        <ButtonBase name="Register"></ButtonBase>
+        <ButtonBase name="Login"></ButtonBase>
       </div>
       <ButtonLoginSwitch isLoginToRegister={true}></ButtonLoginSwitch>
     </form>
