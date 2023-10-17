@@ -10,12 +10,12 @@ export default function Login() {
       <Header></Header>
       <div className={s.login_content}>
         <LoginBox></LoginBox>
-        <Image
+        {/* <Image
           src={Background}
           alt="background"
           width={650}
           height={500}
-        ></Image>
+        ></Image> */}
       </div>
     </div>
   );

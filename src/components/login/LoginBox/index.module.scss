@@ -1,8 +1,8 @@
 .login_box {
   display: flex;
   flex-direction: column;
-  height: 600px;
-  width: 400px;
+  height: 540px;
+  width: 340px;
   background-color: #ffffff;
   border: 0.5px solid #868686;
   border-radius: 10px;
@@ -41,7 +41,11 @@
 }
 
 .login_input {
-  margin-bottom: 69.5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 189.5px;
+  margin-bottom: 100.5px;
 }
 
 .login_register {
