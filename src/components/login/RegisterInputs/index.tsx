@@ -130,7 +130,8 @@ export default function RegisterInputs() {
           id="username"
           type="text"
           label="User name"
-          value="Enter your user name"
+          placeholder="Enter your user name"
+          value={email}
           isCorrect={isValidEmail === "default" || isValidEmail === "true"}
           onChange={emailChangeHandler}
         ></Input>
@@ -138,7 +139,8 @@ export default function RegisterInputs() {
           id="password"
           type="password"
           label="Password"
-          value="Enter your password"
+          placeholder="Enter your password"
+          value={password}
           isCorrect={
             isValidPassword === "default" || isValidPassword === "true"
           }
@@ -148,7 +150,8 @@ export default function RegisterInputs() {
           id="password"
           type="password"
           label="Confirm Password"
-          value="Confirm your password"
+          placeholder="Confirm your password"
+          value={confirmPassword}
           isCorrect={isConfirmSame === "default" || isConfirmSame === "true"}
           onChange={confirmPasswordChangeHandler}
         ></Input>

@@ -19,14 +19,16 @@ export default function Input(props: InputProps) {
           <input
             id={props.id}
             type={props.type}
-            placeholder={props.value}
+            placeholder={props.placeholder}
+            value={props.value}
             onChange={props.onChange}
           ></input>
         </div>
       ) : (
         <div className={boxClassName}>
           <input
-            placeholder={props.value}
+            placeholder={props.placeholder}
+            value={props.value}
             type={isPasswordVisible ? "text" : "password"}
             onChange={props.onChange}
           ></input>

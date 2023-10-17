@@ -20,13 +20,13 @@ export default function LoginInputs() {
           id="username"
           type="text"
           label="User name"
-          value="Enter your user name"
+          placeholder="Enter your user name"
         ></Input>
         <Input
           id="password"
           type="password"
           label="Password"
-          value="Enter your password"
+          placeholder="Enter your password"
         ></Input>
       </div>
       <div className={s.login_button}>
