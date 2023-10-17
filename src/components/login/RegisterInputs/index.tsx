@@ -1,7 +1,14 @@
 import Input from "@/components/atoms/input/Input";
 import ButtonSubmit from "@/components/atoms/button/ButtonSubmit";
 import { AuthContext } from "@/store/GlobalContext";
-import { ChangeEvent, Fragment, useContext, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Fragment,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import s from "./index.module.scss";
 
 export default function RegisterInputs() {
@@ -9,32 +16,38 @@ export default function RegisterInputs() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [isValidEmail, setIsValidEmail] = useState(false);
-  const [isValidPassword, setIsValidPassword] = useState(false);
-  const [isConfirmSame, setIsConfirmSame] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState("default");
+  const [isValidPassword, setIsValidPassword] = useState("default");
+  const [isConfirmSame, setIsConfirmSame] = useState("default");
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const isEmailInputStarted = useRef(false);
+  const isPasswordInputStarted = useRef(false);
+  const isConfirmPasswordInputStarted = useRef(false);
 
   const checkIsValidEmail = (email: string) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (emailPattern.test(email)) {
-      setIsValidEmail(true);
+      setIsValidEmail("true");
     } else {
-      setIsValidEmail(false);
+      setIsValidEmail("false");
     }
   };
 
   const checkIsValidPassword = (password: string) => {
     if (password.length >= 8) {
-      setIsValidPassword(true);
+      setIsValidPassword("true");
     } else {
-      setIsValidPassword(false);
+      setIsValidPassword("false");
     }
   };
 
   const checkIsConfirmSame = (password: string, confirmPassword: string) => {
     if (password === confirmPassword) {
-      setIsConfirmSame(true);
+      setIsConfirmSame("true");
     } else {
-      setIsConfirmSame(false);
+      setIsConfirmSame("false");
     }
   };
 
@@ -53,25 +66,40 @@ export default function RegisterInputs() {
   };
 
   const confirmHandler = () => {
-    // TODO: 유효성 인증 로직 추가
-    console.log("validate id & pw");
+    if (
+      isValidEmail === "true" &&
+      isValidPassword === "true" &&
+      isConfirmSame === "true"
+    ) {
+      console.log("validate id & pw");
+      setIsFormValid(true);
+    } else {
+      console.log("wrong id & pw");
+      setIsFormValid(false);
+    }
   };
 
   useEffect(() => {
     const keyboardTimer = setTimeout(() => {
-      console.log("유효성 검사!");
-      checkIsValidEmail(email);
+      if (!isEmailInputStarted.current) {
+        isEmailInputStarted.current = true;
+      } else {
+        checkIsValidEmail(email);
+      }
     }, 500);
 
     return () => {
-      console.log("타이머 초기화!");
       clearTimeout(keyboardTimer);
     };
   }, [email]);
 
   useEffect(() => {
     const keyboardTimer = setTimeout(() => {
-      checkIsValidPassword(password);
+      if (!isPasswordInputStarted.current) {
+        isPasswordInputStarted.current = true;
+      } else {
+        checkIsValidPassword(password);
+      }
     }, 500);
 
     return () => {
@@ -82,7 +110,11 @@ export default function RegisterInputs() {
 
   useEffect(() => {
     const keyboardTimer = setTimeout(() => {
-      checkIsConfirmSame(password, confirmPassword);
+      if (!isConfirmPasswordInputStarted.current) {
+        isConfirmPasswordInputStarted.current = true;
+      } else {
+        checkIsConfirmSame(password, confirmPassword);
+      }
     }, 500);
 
     return () => {
@@ -99,7 +131,7 @@ export default function RegisterInputs() {
           type="text"
           label="User name"
           value="Enter your user name"
-          isCorrect={email === "" || isValidEmail}
+          isCorrect={isValidEmail === "default" || isValidEmail === "true"}
           onChange={emailChangeHandler}
         ></Input>
         <Input
@@ -107,7 +139,9 @@ export default function RegisterInputs() {
           type="password"
           label="Password"
           value="Enter your password"
-          isCorrect={password === "" || isValidPassword}
+          isCorrect={
+            isValidPassword === "default" || isValidPassword === "true"
+          }
           onChange={passwordChangeHandler}
         ></Input>
         <Input
@@ -115,7 +149,7 @@ export default function RegisterInputs() {
           type="password"
           label="Confirm Password"
           value="Confirm your password"
-          isCorrect={confirmPassword === "" || isConfirmSame}
+          isCorrect={isConfirmSame === "default" || isConfirmSame === "true"}
           onChange={confirmPasswordChangeHandler}
         ></Input>
       </div>
