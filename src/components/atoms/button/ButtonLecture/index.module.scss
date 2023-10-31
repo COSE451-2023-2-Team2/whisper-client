@@ -1,0 +1,29 @@
+.button_lecture {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 79px;
+
+  label {
+    color: #000;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  button {
+    border-radius: 6px;
+    border: 0.6px solid #749bff;
+    background: #749bff;
+    width: 157px;
+    height: 51px;
+    color: #fff;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+  }
+}

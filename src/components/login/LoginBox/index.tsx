@@ -1,9 +1,6 @@
-import ButtonSubmit from "@/components/atoms/button/ButtonSubmit";
 import s from "./index.module.scss";
 import ButtonLoginSwitch from "@/components/atoms/button/ButtonLoginSwitch";
-import Input from "@/components/atoms/input/Input";
-import { FormEvent, useContext, useState } from "react";
-import { AuthContext } from "@/store/GlobalContext";
+import { useState } from "react";
 import LoginInputs from "@/components/login/LoginInputs";
 import RegisterInputs from "@/components/login/RegisterInputs";
 
