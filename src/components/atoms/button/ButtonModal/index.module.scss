@@ -1,6 +1,6 @@
-.button_submit {
-  height: 50px;
-  width: 340px;
+.button_modal {
+  height: 40px;
+  width: 120px;
   border-radius: 6px;
   background: #000;
   color: #fff;
@@ -12,6 +12,6 @@
   text-align: center;
 }
 
-.button_submit:disabled {
+.button_modal:disabled {
   background: #7a7878;
 }
