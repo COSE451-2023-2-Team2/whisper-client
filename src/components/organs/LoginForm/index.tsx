@@ -1,17 +1,20 @@
 import Input from "@/components/molecules/login/InputField";
 import ButtonSubmit from "@/components/atoms/button/ButtonSubmit";
-import { AuthContext } from "@/store/GlobalContext";
+import { AuthContext, ModalContext } from "@/store/GlobalContext";
 import { Fragment, useContext } from "react";
 import s from "./index.module.scss";
 import InputField from "@/components/molecules/login/InputField";
+import LoginModal from "@/components/popup/LoginModal";
 
 export default function LoginForm() {
-  const authContext = useContext(AuthContext);
+  const [, setIsLoggedIn] = useContext(AuthContext);
+  const [, setModal] = useContext(ModalContext);
 
   const submitHandler = () => {
     localStorage.setItem("isLoggedIn", "true");
     // TODO 이곳에 로그인 관련 로직 추가
-    authContext.setIsLoggedIn(true);
+    // setIsLoggedIn(true);
+    setModal(<LoginModal />);
   };
 
   return (
