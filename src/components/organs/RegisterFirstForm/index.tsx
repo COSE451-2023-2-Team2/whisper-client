@@ -16,8 +16,6 @@ import InputField from "@/components/molecules/login/InputField";
 import useInputValidation from "@/hooks/useInputValidation";
 
 export default function RegisterFirstForm(props: RegisterFirstFormProps) {
-  const [isFormValid, setIsFormValid] = useState(false);
-
   const emailChecker = useCallback((email: string) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailPattern.test(email);
@@ -61,12 +59,9 @@ export default function RegisterFirstForm(props: RegisterFirstFormProps) {
       isValidPassword === "true" &&
       isConfirmSame === "true"
     ) {
-      console.log("validate id & pw");
-      setIsFormValid(true);
-      props.movePage();
-    } else {
-      console.log("wrong id & pw");
-      setIsFormValid(false);
+      console.log("서버에 회원가입 요청 전송!");
+      const result = true;
+      result ? props.movePage() : console.log("에러 모달 출력");
     }
   };
 
@@ -106,7 +101,13 @@ export default function RegisterFirstForm(props: RegisterFirstFormProps) {
       <div className={s.register_button}>
         <ButtonSubmit
           name="Register"
-          disabled={!isValidEmail || !isValidPassword || !isConfirmSame}
+          disabled={
+            !(
+              isValidEmail === "true" &&
+              isValidPassword === "true" &&
+              isConfirmSame === "true"
+            )
+          }
           onClick={confirmHandler}
         ></ButtonSubmit>
       </div>
