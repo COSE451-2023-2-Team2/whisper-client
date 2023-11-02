@@ -1,21 +1,16 @@
 import Input from "@/components/molecules/login/InputField";
 import ButtonSubmit from "@/components/atoms/button/ButtonSubmit";
-import { AuthContext } from "@/store/GlobalContext";
-import {
-  ChangeEvent,
-  Fragment,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ModalContext } from "@/store/GlobalContext";
+import { Fragment, useCallback, useContext } from "react";
 import s from "./index.module.scss";
 import { RegisterFirstFormProps } from "./index.d";
 import InputField from "@/components/molecules/login/InputField";
 import useInputValidation from "@/hooks/useInputValidation";
+import ErrorModal from "@/components/popup/ErrorModal";
 
 export default function RegisterFirstForm(props: RegisterFirstFormProps) {
+  const [, setModal] = useContext(ModalContext);
+
   const emailChecker = useCallback((email: string) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailPattern.test(email);
@@ -60,8 +55,8 @@ export default function RegisterFirstForm(props: RegisterFirstFormProps) {
       isConfirmSame === "true"
     ) {
       console.log("서버에 회원가입 요청 전송!");
-      const result = true;
-      result ? props.movePage() : console.log("에러 모달 출력");
+      const result = false;
+      result ? props.movePage() : setModal(<ErrorModal error="register" />);
     }
   };
 

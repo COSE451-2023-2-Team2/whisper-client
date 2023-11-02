@@ -4,7 +4,7 @@ import { AuthContext, ModalContext } from "@/store/GlobalContext";
 import { Fragment, useContext } from "react";
 import s from "./index.module.scss";
 import InputField from "@/components/molecules/login/InputField";
-import LoginModal from "@/components/popup/LoginModal";
+import ErrorModal from "@/components/popup/ErrorModal";
 
 export default function LoginForm() {
   const [, setIsLoggedIn] = useContext(AuthContext);
@@ -14,7 +14,7 @@ export default function LoginForm() {
     localStorage.setItem("isLoggedIn", "true");
     // TODO 이곳에 로그인 관련 로직 추가
     // setIsLoggedIn(true);
-    setModal(<LoginModal />);
+    setModal(<ErrorModal error="login" />);
   };
 
   return (
