@@ -1,18 +1,22 @@
-import { ButtonLoginSwitchProps } from "./index.d";
+import { ComponentProps } from "react";
 import s from "./index.module.scss";
+import Button from "../Button";
 
-export default function ButtonLoginSwitch(props: ButtonLoginSwitchProps) {
+type Props = ComponentProps<typeof Button> & {
+  isLoginToRegister: boolean;
+};
+
+export default function ButtonLoginSwitch(props: Props) {
   return (
-    <button className={s.button_login_switch}>
-      <span className={s.first_string}>
+    <div className={s.button_login_switch}>
+      <span>
         {props.isLoginToRegister
           ? "Don't have an account ?"
           : "Already have an account ?"}
       </span>
-      {"  "}
-      <span className={s.second_string}>
+      <Button onClick={props.onClick}>
         {props.isLoginToRegister ? "Register" : "Login"}
-      </span>
-    </button>
+      </Button>
+    </div>
   );
 }
