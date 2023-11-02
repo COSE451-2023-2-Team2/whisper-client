@@ -6,28 +6,29 @@ import s from "./index.module.scss";
 import InputField from "@/components/molecules/login/InputField";
 import ErrorModal from "@/components/popup/ErrorModal";
 import useInputValidation from "@/hooks/useInputValidation";
+import { useRouter } from "next/router";
 
 export default function LoginForm() {
   const [, setIsLoggedIn] = useContext(AuthContext);
   const [, setModal] = useContext(ModalContext);
+  const router = useRouter();
 
-  const {
-    input: email,
-    isValidInput: isValidEmail,
-    inputChangeHandler: emailChangeHandler,
-  } = useInputValidation();
+  const { input: email, isValidInput: isValidEmail, inputChangeHandler: emailChangeHandler } = useInputValidation();
 
   const {
     input: password,
     isValidInput: isValidPassword,
-    inputChangeHandler: passwordChangeHandler,
+    inputChangeHandler: passwordChangeHandler
   } = useInputValidation();
 
   const submitHandler = () => {
     localStorage.setItem("isLoggedIn", "true");
     // TODO 이곳에 로그인 관련 로직 추가
-    // setIsLoggedIn(true);
-    setModal(<ErrorModal error="login" />);
+    setIsLoggedIn(true);
+    router.push({
+      pathname: "/chat"
+    });
+    // setModal(<ErrorModal error="login" />);
   };
 
   return (
@@ -48,9 +49,7 @@ export default function LoginForm() {
           label="Password"
           placeholder="Enter your password"
           value={password}
-          isCorrect={
-            isValidPassword === "default" || isValidPassword === "true"
-          }
+          isCorrect={isValidPassword === "default" || isValidPassword === "true"}
           onChange={passwordChangeHandler}
         ></InputField>
       </div>
