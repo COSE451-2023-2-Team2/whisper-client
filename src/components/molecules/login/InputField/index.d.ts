@@ -1,10 +1,10 @@
 import { ChangeEventHandler } from "react";
 
-export interface InputProps {
+export interface InputFieldProps {
   id: string;
-  type: string;
   label: string;
   placeholder: string;
+  type?: string;
   value?: string;
   isCorrect?: boolean;
   onChange?: ChangeEventHandler;

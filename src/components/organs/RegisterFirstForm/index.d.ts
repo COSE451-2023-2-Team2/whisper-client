@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from "react";
 
-export interface RegisterFirstInputsProps {
+export interface RegisterFirstFormProps {
   movePage: () => void;
 }

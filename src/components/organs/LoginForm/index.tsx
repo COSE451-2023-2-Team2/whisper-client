@@ -1,10 +1,11 @@
-import Input from "@/components/atoms/input/Input";
+import Input from "@/components/molecules/login/InputField";
 import ButtonSubmit from "@/components/atoms/button/ButtonSubmit";
 import { AuthContext } from "@/store/GlobalContext";
 import { Fragment, useContext } from "react";
 import s from "./index.module.scss";
+import InputField from "@/components/molecules/login/InputField";
 
-export default function LoginInputs() {
+export default function LoginForm() {
   const authContext = useContext(AuthContext);
 
   const submitHandler = () => {
@@ -14,24 +15,24 @@ export default function LoginInputs() {
   };
 
   return (
-    <Fragment>
+    <div className={s.login_form}>
       <div className={s.login_input}>
-        <Input
+        <InputField
           id="username"
           type="text"
           label="User name"
           placeholder="Enter your user name"
-        ></Input>
-        <Input
+        ></InputField>
+        <InputField
           id="password"
           type="password"
           label="Password"
           placeholder="Enter your password"
-        ></Input>
+        ></InputField>
       </div>
       <div className={s.login_button}>
         <ButtonSubmit name="Login" onClick={submitHandler}></ButtonSubmit>
       </div>
-    </Fragment>
+    </div>
   );
 }

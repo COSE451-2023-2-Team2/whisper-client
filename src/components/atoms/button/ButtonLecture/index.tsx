@@ -2,16 +2,10 @@ import { ComponentProps } from "react";
 import Button from "../Button";
 import s from "./index.module.scss";
 
-export default function ButtonLecture(
-  props: ComponentProps<typeof Button> & {
-    id: string;
-    label: string;
-  }
-) {
+export default function ButtonLecture(props: ComponentProps<typeof Button>) {
   return (
     <div className={s.button_lecture}>
-      <label htmlFor={props.id}>{props.label}</label>
-      <Button>COSE441</Button>
+      <Button>{props.name}</Button>
     </div>
   );
 }

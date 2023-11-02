@@ -1,4 +1,4 @@
-import Input from "@/components/atoms/input/Input";
+import Input from "@/components/molecules/login/InputField";
 import ButtonSubmit from "@/components/atoms/button/ButtonSubmit";
 import { AuthContext } from "@/store/GlobalContext";
 import {
@@ -10,9 +10,10 @@ import {
   useState,
 } from "react";
 import s from "./index.module.scss";
-import { RegisterFirstInputsProps } from "./index.d";
+import { RegisterFirstFormProps } from "./index.d";
+import InputField from "@/components/molecules/login/InputField";
 
-export default function RegisterFirstInputs(props: RegisterFirstInputsProps) {
+export default function RegisterFirstForm(props: RegisterFirstFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -128,7 +129,7 @@ export default function RegisterFirstInputs(props: RegisterFirstInputsProps) {
   return (
     <Fragment>
       <div className={s.register_input}>
-        <Input
+        <InputField
           id="username"
           type="text"
           label="User name"
@@ -136,8 +137,8 @@ export default function RegisterFirstInputs(props: RegisterFirstInputsProps) {
           value={email}
           isCorrect={isValidEmail === "default" || isValidEmail === "true"}
           onChange={emailChangeHandler}
-        ></Input>
-        <Input
+        ></InputField>
+        <InputField
           id="password"
           type="password"
           label="Password"
@@ -147,8 +148,8 @@ export default function RegisterFirstInputs(props: RegisterFirstInputsProps) {
             isValidPassword === "default" || isValidPassword === "true"
           }
           onChange={passwordChangeHandler}
-        ></Input>
-        <Input
+        ></InputField>
+        <InputField
           id="password"
           type="password"
           label="Confirm Password"
@@ -156,7 +157,7 @@ export default function RegisterFirstInputs(props: RegisterFirstInputsProps) {
           value={confirmPassword}
           isCorrect={isConfirmSame === "default" || isConfirmSame === "true"}
           onChange={confirmPasswordChangeHandler}
-        ></Input>
+        ></InputField>
       </div>
       <div className={s.register_button}>
         <ButtonSubmit
