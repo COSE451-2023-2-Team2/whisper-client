@@ -65,7 +65,7 @@ export default function RegisterSecondForm() {
       console.log("타이머 초기화!");
       clearTimeout(keyboardTimer);
     };
-  }, []);
+  }, [userName]);
 
   useEffect(() => {
     // 컴포넌트가 처음 렌더링될 때 강의 목록을 가져옴

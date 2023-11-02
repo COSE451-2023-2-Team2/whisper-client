@@ -4,6 +4,7 @@ import { AuthContext } from "@/store/GlobalContext";
 import {
   ChangeEvent,
   Fragment,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -12,60 +13,47 @@ import {
 import s from "./index.module.scss";
 import { RegisterFirstFormProps } from "./index.d";
 import InputField from "@/components/molecules/login/InputField";
+import useInputValidation from "@/hooks/useInputValidation";
 
 export default function RegisterFirstForm(props: RegisterFirstFormProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const [isValidEmail, setIsValidEmail] = useState("default");
-  const [isValidPassword, setIsValidPassword] = useState("default");
-  const [isConfirmSame, setIsConfirmSame] = useState("default");
-
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const isEmailInputStarted = useRef(false);
-  const isPasswordInputStarted = useRef(false);
-  const isConfirmPasswordInputStarted = useRef(false);
-
-  const checkIsValidEmail = (email: string) => {
+  const emailChecker = useCallback((email: string) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (emailPattern.test(email)) {
-      setIsValidEmail("true");
-    } else {
-      setIsValidEmail("false");
-    }
-  };
+    return emailPattern.test(email);
+  }, []);
 
-  const checkIsValidPassword = (password: string) => {
-    if (password.length >= 8) {
-      setIsValidPassword("true");
-    } else {
-      setIsValidPassword("false");
-    }
-  };
+  const passwordChecker = useCallback((password: string) => {
+    return password.length >= 8 ? true : false;
+  }, []);
 
-  const checkIsConfirmSame = (password: string, confirmPassword: string) => {
-    if (password === confirmPassword) {
-      setIsConfirmSame("true");
-    } else {
-      setIsConfirmSame("false");
-    }
-  };
+  const {
+    input: email,
+    isValidInput: isValidEmail,
+    isInputStarted: isEmailInputStarted,
+    inputChangeHandler: emailChangeHandler,
+  } = useInputValidation(emailChecker);
 
-  const emailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
+  const {
+    input: password,
+    isValidInput: isValidPassword,
+    isInputStarted: isPasswordInputStarted,
+    inputChangeHandler: passwordChangeHandler,
+  } = useInputValidation(passwordChecker);
 
-  const passwordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
+  const confirmPasswordChecker = useCallback(
+    (confirmPassword: string) => {
+      return confirmPassword === password ? true : false;
+    },
+    [password]
+  );
 
-  const confirmPasswordChangeHandler = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setConfirmPassword(event.target.value);
-  };
+  const {
+    input: confirmPassword,
+    isValidInput: isConfirmSame,
+    isInputStarted: isComfirmPasswordInputStarted,
+    inputChangeHandler: confirmPasswordChangeHandler,
+  } = useInputValidation(confirmPasswordChecker);
 
   const confirmHandler = () => {
     if (
@@ -82,50 +70,6 @@ export default function RegisterFirstForm(props: RegisterFirstFormProps) {
     }
   };
 
-  useEffect(() => {
-    const keyboardTimer = setTimeout(() => {
-      if (!isEmailInputStarted.current) {
-        isEmailInputStarted.current = true;
-      } else {
-        checkIsValidEmail(email);
-      }
-    }, 500);
-
-    return () => {
-      clearTimeout(keyboardTimer);
-    };
-  }, [email]);
-
-  useEffect(() => {
-    const keyboardTimer = setTimeout(() => {
-      if (!isPasswordInputStarted.current) {
-        isPasswordInputStarted.current = true;
-      } else {
-        checkIsValidPassword(password);
-      }
-    }, 500);
-
-    return () => {
-      console.log("타이머 초기화!");
-      clearTimeout(keyboardTimer);
-    };
-  }, [password]);
-
-  useEffect(() => {
-    const keyboardTimer = setTimeout(() => {
-      if (!isConfirmPasswordInputStarted.current) {
-        isConfirmPasswordInputStarted.current = true;
-      } else {
-        checkIsConfirmSame(password, confirmPassword);
-      }
-    }, 500);
-
-    return () => {
-      console.log("타이머 초기화!");
-      clearTimeout(keyboardTimer);
-    };
-  }, [password, confirmPassword]);
-
   return (
     <Fragment>
       <div className={s.register_input}>
@@ -133,7 +77,7 @@ export default function RegisterFirstForm(props: RegisterFirstFormProps) {
           id="username"
           type="text"
           label="User name"
-          placeholder="Enter your user name"
+          placeholder="Enter your email address"
           value={email}
           isCorrect={isValidEmail === "default" || isValidEmail === "true"}
           onChange={emailChangeHandler}
@@ -161,7 +105,7 @@ export default function RegisterFirstForm(props: RegisterFirstFormProps) {
       </div>
       <div className={s.register_button}>
         <ButtonSubmit
-          name="Confirm"
+          name="Register"
           disabled={!isValidEmail || !isValidPassword || !isConfirmSame}
           onClick={confirmHandler}
         ></ButtonSubmit>

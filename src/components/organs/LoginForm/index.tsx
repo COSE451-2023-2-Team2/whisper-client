@@ -18,10 +18,10 @@ export default function LoginForm() {
     <div className={s.login_form}>
       <div className={s.login_input}>
         <InputField
-          id="username"
+          id="email"
           type="text"
-          label="User name"
-          placeholder="Enter your user name"
+          label="Email"
+          placeholder="Enter your email address"
         ></InputField>
         <InputField
           id="password"
