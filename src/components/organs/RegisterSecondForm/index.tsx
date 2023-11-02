@@ -4,13 +4,23 @@ import LectureSelectField from "@/components/molecules/login/LectureSelectField"
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
 import s from "./index.module.scss";
 
+interface Lecture {
+  id: number;
+  title: string;
+  selected: boolean;
+}
+
 export default function RegisterSecondForm() {
   const [userName, setUserName] = useState("");
   const [isValidUserName, setIsValidUserName] = useState("default");
   const isUserNameInputStarted = useRef(false);
 
-  // NOTE: currently hard-coded
-  const lectures: string[] = ["COSE441"];
+  const [lectures, setLectures] = useState<Lecture[]>([]);
+
+  const fetchLectures = async () => {
+    // NOTE: 임시로 예시 강의 사용 - 실제로는 서버에서 강의 목록을 불러오는 방식
+    setLectures([{ id: 0, title: "COSE441", selected: false }]);
+  };
 
   const userNameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
@@ -22,6 +32,24 @@ export default function RegisterSecondForm() {
     } else {
       setIsValidUserName("false");
     }
+  };
+
+  const addLecture = (lectureId: number) => {
+    console.log(lectureId);
+    setLectures((prevLectures) =>
+      prevLectures.map((lecture) =>
+        lecture.id === lectureId
+          ? { ...lecture, selected: !lecture.selected }
+          : lecture
+      )
+    );
+  };
+
+  const confirmHandler = () => {
+    // TODO: 로직 작성
+    console.log(userName);
+    console.log(lectures);
+    console.log("채팅 이동!");
   };
 
   useEffect(() => {
@@ -39,10 +67,10 @@ export default function RegisterSecondForm() {
     };
   }, []);
 
-  const confirmHandler = () => {
-    // TODO: 로직 작성
-    console.log("회원가입!");
-  };
+  useEffect(() => {
+    // 컴포넌트가 처음 렌더링될 때 강의 목록을 가져옴
+    fetchLectures();
+  }, []);
 
   return (
     <Fragment>
@@ -60,7 +88,8 @@ export default function RegisterSecondForm() {
         ></InputField>
         <LectureSelectField
           label="Choose class"
-          lectureNames={lectures}
+          lectureList={lectures}
+          lectureClickHandler={addLecture}
         ></LectureSelectField>
       </div>
       <div className={s.register_button}>

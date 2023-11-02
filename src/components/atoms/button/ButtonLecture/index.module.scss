@@ -1,18 +1,4 @@
 .button_lecture {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 79px;
-
-  label {
-    color: #000;
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-
   button {
     border-radius: 6px;
     border: 0.6px solid #749bff;
@@ -25,5 +11,11 @@
     font-style: normal;
     font-weight: 300;
     line-height: normal;
+  }
+
+  &.selected {
+    button {
+      background: #1c58f2;
+    }
   }
 }

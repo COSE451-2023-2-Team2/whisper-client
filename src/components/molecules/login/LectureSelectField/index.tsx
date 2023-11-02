@@ -1,10 +1,16 @@
 import ButtonLecture from "@/components/atoms/button/ButtonLecture";
 import { LectureSelectFieldProps } from "./index.d";
 import s from "./index.module.scss";
+import { MouseEvent } from "react";
 
 export default function LectureSelectField(props: LectureSelectFieldProps) {
-  const lectureButtons = props.lectureNames.map((lectureName, index) => (
-    <ButtonLecture key={index} name={lectureName}></ButtonLecture>
+  const lectureButtons = props.lectureList.map((lecture, index) => (
+    <ButtonLecture
+      key={lecture.id}
+      name={lecture.title}
+      isSelected={lecture.selected}
+      onClick={() => props.lectureClickHandler(index)}
+    ></ButtonLecture>
   ));
 
   return (
