@@ -5,10 +5,23 @@ import { Fragment, useContext } from "react";
 import s from "./index.module.scss";
 import InputField from "@/components/molecules/login/InputField";
 import ErrorModal from "@/components/popup/ErrorModal";
+import useInputValidation from "@/hooks/useInputValidation";
 
 export default function LoginForm() {
   const [, setIsLoggedIn] = useContext(AuthContext);
   const [, setModal] = useContext(ModalContext);
+
+  const {
+    input: email,
+    isValidInput: isValidEmail,
+    inputChangeHandler: emailChangeHandler,
+  } = useInputValidation();
+
+  const {
+    input: password,
+    isValidInput: isValidPassword,
+    inputChangeHandler: passwordChangeHandler,
+  } = useInputValidation();
 
   const submitHandler = () => {
     localStorage.setItem("isLoggedIn", "true");
@@ -25,16 +38,28 @@ export default function LoginForm() {
           type="text"
           label="Email"
           placeholder="Enter your email address"
+          value={email}
+          isCorrect={isValidEmail === "default" || isValidEmail === "true"}
+          onChange={emailChangeHandler}
         ></InputField>
         <InputField
           id="password"
           type="password"
           label="Password"
           placeholder="Enter your password"
+          value={password}
+          isCorrect={
+            isValidPassword === "default" || isValidPassword === "true"
+          }
+          onChange={passwordChangeHandler}
         ></InputField>
       </div>
       <div className={s.login_button}>
-        <ButtonSubmit name="Login" onClick={submitHandler}></ButtonSubmit>
+        <ButtonSubmit
+          name="Login"
+          disabled={!(isValidEmail === "true" && isValidPassword === "true")}
+          onClick={submitHandler}
+        ></ButtonSubmit>
       </div>
     </div>
   );

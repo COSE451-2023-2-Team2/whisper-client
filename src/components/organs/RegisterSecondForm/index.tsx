@@ -3,6 +3,7 @@ import InputField from "@/components/molecules/login/InputField";
 import LectureSelectField from "@/components/molecules/login/LectureSelectField";
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
 import s from "./index.module.scss";
+import useInputValidation from "@/hooks/useInputValidation";
 
 interface Lecture {
   id: number;
@@ -11,10 +12,6 @@ interface Lecture {
 }
 
 export default function RegisterSecondForm() {
-  const [userName, setUserName] = useState("");
-  const [isValidUserName, setIsValidUserName] = useState("default");
-  const isUserNameInputStarted = useRef(false);
-
   const [lectures, setLectures] = useState<Lecture[]>([]);
 
   const fetchLectures = async () => {
@@ -22,17 +19,15 @@ export default function RegisterSecondForm() {
     setLectures([{ id: 0, title: "COSE441", selected: false }]);
   };
 
-  const userNameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value);
+  const userNameChecker = (userName: string) => {
+    return userName.length > 0 ? true : false;
   };
 
-  const checkIsValidUserName = (userName: string) => {
-    if (userName.length > 0) {
-      setIsValidUserName("true");
-    } else {
-      setIsValidUserName("false");
-    }
-  };
+  const {
+    input: userName,
+    isValidInput: isValidUserName,
+    inputChangeHandler: userNameChangeHandler,
+  } = useInputValidation(userNameChecker);
 
   const addLecture = (lectureId: number) => {
     console.log(lectureId);
@@ -51,21 +46,6 @@ export default function RegisterSecondForm() {
     console.log(lectures);
     console.log("채팅 이동!");
   };
-
-  useEffect(() => {
-    const keyboardTimer = setTimeout(() => {
-      if (!isUserNameInputStarted.current) {
-        isUserNameInputStarted.current = true;
-      } else {
-        checkIsValidUserName(userName);
-      }
-    }, 500);
-
-    return () => {
-      console.log("타이머 초기화!");
-      clearTimeout(keyboardTimer);
-    };
-  }, [userName]);
 
   useEffect(() => {
     // 컴포넌트가 처음 렌더링될 때 강의 목록을 가져옴

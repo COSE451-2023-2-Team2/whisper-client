@@ -23,14 +23,12 @@ export default function RegisterFirstForm(props: RegisterFirstFormProps) {
   const {
     input: email,
     isValidInput: isValidEmail,
-    isInputStarted: isEmailInputStarted,
     inputChangeHandler: emailChangeHandler,
   } = useInputValidation(emailChecker);
 
   const {
     input: password,
     isValidInput: isValidPassword,
-    isInputStarted: isPasswordInputStarted,
     inputChangeHandler: passwordChangeHandler,
   } = useInputValidation(passwordChecker);
 
@@ -44,7 +42,6 @@ export default function RegisterFirstForm(props: RegisterFirstFormProps) {
   const {
     input: confirmPassword,
     isValidInput: isConfirmSame,
-    isInputStarted: isComfirmPasswordInputStarted,
     inputChangeHandler: confirmPasswordChangeHandler,
   } = useInputValidation(confirmPasswordChecker);
 
@@ -54,8 +51,9 @@ export default function RegisterFirstForm(props: RegisterFirstFormProps) {
       isValidPassword === "true" &&
       isConfirmSame === "true"
     ) {
+      // TODO: 서버 연결 로직 추가
       console.log("서버에 회원가입 요청 전송!");
-      const result = false;
+      const result = true;
       result ? props.movePage() : setModal(<ErrorModal error="register" />);
     }
   };

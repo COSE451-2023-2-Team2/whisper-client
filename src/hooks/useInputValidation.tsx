@@ -2,7 +2,13 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 
 type ValidInputChecker = (input: string) => boolean;
 
-export default function useInputValidation(checker: ValidInputChecker) {
+const baseChecker = (input: string) => {
+  return input.length > 0 ? true : false;
+};
+
+export default function useInputValidation(
+  checker: ValidInputChecker = baseChecker
+) {
   const [input, setInput] = useState("");
   const [isValidInput, setIsValidInput] = useState("default");
 
@@ -40,7 +46,6 @@ export default function useInputValidation(checker: ValidInputChecker) {
   return {
     input,
     isValidInput,
-    isInputStarted,
     inputChangeHandler,
   };
 }
