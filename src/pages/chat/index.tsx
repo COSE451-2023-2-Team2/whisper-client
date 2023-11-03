@@ -2,6 +2,7 @@ import ButtonFixedS from "@/components/atoms/button/ButtonFixedS";
 import ChatInputField from "@/components/molecules/chat/ChatInputField";
 import ChatMessage from "@/components/molecules/chat/ChatMessage";
 import ChatContainer from "@/components/organs/ChatContainer";
+import ChatInputForm from "@/components/organs/ChatInputForm";
 
 export default function Chat() {
   const chats = [
@@ -41,6 +42,7 @@ export default function Chat() {
   return (
     <div>
       <ChatContainer chats={chats}></ChatContainer>
+      <ChatInputForm></ChatInputForm>
     </div>
   );
 }
