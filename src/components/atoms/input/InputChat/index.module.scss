@@ -1,4 +1,7 @@
 .input_chat {
+  display: flex;
+  justify-content: center;
+
   input {
     border: none;
     background-color: #ffffff00;
@@ -25,7 +28,7 @@
 
   &.focused {
     input::placeholder {
-      transform: translateX(100%); // 이동할 거리 조절
+      transform: translateX(10px); // 이동할 거리 조절
       opacity: 0; // 투명도를 0으로 조절
     }
   }
