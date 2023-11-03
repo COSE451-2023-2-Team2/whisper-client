@@ -1,0 +1,14 @@
+.chat_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat_message {
+  &.mine {
+    align-self: flex-end;
+  }
+
+  &.others {
+    align-self: flex-start;
+  }
+}
