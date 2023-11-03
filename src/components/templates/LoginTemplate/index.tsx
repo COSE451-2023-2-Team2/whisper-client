@@ -2,7 +2,7 @@ import s from "./index.module.scss";
 import ButtonLoginSwitch from "@/components/atoms/button/ButtonLoginSwitch";
 import { useState } from "react";
 import LoginInputs from "@/components/organs/LoginForm";
-import TextField from "@/components/molecules/login/TextField";
+import LoginTextField from "@/components/molecules/login/LoginTextField";
 import RegisterFirstForm from "@/components/organs/RegisterFirstForm";
 import RegisterSecondForm from "@/components/organs/RegisterSecondForm";
 
@@ -34,12 +34,9 @@ export default function LoginTemplate() {
 
   return (
     <div className={s.login_box}>
-      <TextField registerState={registerState}></TextField>
+      <LoginTextField registerState={registerState}></LoginTextField>
       <div className={s.login_form}>{currentPage()}</div>
-      <ButtonLoginSwitch
-        isLoginToRegister={!registerState}
-        onClick={changeLoginState}
-      ></ButtonLoginSwitch>
+      <ButtonLoginSwitch isLoginToRegister={!registerState} onClick={changeLoginState}></ButtonLoginSwitch>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { ModalContext } from "@/store/GlobalContext";
 import { useContext } from "react";
 import Modal from "./Modal";
-import ButtonModal from "../atoms/button/ButtonModal";
+import ButtonFixedM from "../atoms/button/ButtonFixedM";
 import s from "./ErrorModal.module.scss";
 
 export interface ErrorModalProps {
@@ -23,14 +23,13 @@ export default function ErrorModal(props: ErrorModalProps) {
   const errorMessages: ErrorMessages = {
     login: {
       title: "Login Failed",
-      content:
-        "Your login attempt was unsuccessful. Please check your username and password and try again.",
+      content: "Your login attempt was unsuccessful. Please check your username and password and try again."
     },
     register: {
       title: "Registration Failed",
       content:
-        "Please make sure you have entered the correct email address. If you are already a registered member, please log in.",
-    },
+        "Please make sure you have entered the correct email address. If you are already a registered member, please log in."
+    }
   };
 
   const onClickHandler = () => {
@@ -47,7 +46,7 @@ export default function ErrorModal(props: ErrorModalProps) {
       <div className={s.wrapper}>
         <div className={s.title}>{errorMessages[props.error].title}</div>
         <div className={s.content}>{errorMessages[props.error].content}</div>
-        <ButtonModal name="Close" onClick={onClickHandler}></ButtonModal>
+        <ButtonFixedM name="Close" onClick={onClickHandler}></ButtonFixedM>
       </div>
     </Modal>
   );
