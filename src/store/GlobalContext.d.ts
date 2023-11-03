@@ -7,10 +7,6 @@ export type ModalContextChildren = React.ReactNode | null | React.ReactNode[] | 
 
 export type Chat = {
   userName: string;
-  messages: Message[];
-};
-
-export type Message = {
   message: string;
   date: Date;
 };
