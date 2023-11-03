@@ -1,5 +1,6 @@
 import ChatElement from "@/components/atoms/chat/ChatElement";
 import ChatTime from "@/components/atoms/chat/ChatTime";
+import InputChat from "@/components/atoms/input/InputChat";
 import ChatMessage from "@/components/molecules/chat/ChatMessage";
 
 export default function Chat() {
@@ -21,6 +22,7 @@ export default function Chat() {
   return (
     <div>
       <ChatMessage isMine={false} userName="pengtoshi" messages={messages}></ChatMessage>
+      <InputChat placeholder="test..."></InputChat>
     </div>
   );
 }
