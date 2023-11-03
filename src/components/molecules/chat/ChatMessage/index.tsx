@@ -5,11 +5,13 @@ import ChatElement from "@/components/atoms/chat/ChatElement";
 import ChatTime from "@/components/atoms/chat/ChatTime";
 
 export default function ChatMessage(props: ChatMessageProps) {
+  const cx = `${props.isMine ? s.mine : s.others}`;
+
   return (
-    <div className={s.message_container}>
+    <div className={`${s.message_container} ${cx}`}>
       {props.isMine ? "" : <ChatAvatar userName={props.userName}></ChatAvatar>}
 
-      <div className={`${s.messages} ${props.isMine ? s.mine : s.others}`}>
+      <div className={`${s.messages} ${cx}`}>
         {props.messages.map((message, index) => (
           <ChatElement
             key={index}
@@ -18,7 +20,7 @@ export default function ChatMessage(props: ChatMessageProps) {
             message={message.message}
           />
         ))}
-        <div className={`${s.message_time} ${props.isMine ? s.mine : s.others}`}>
+        <div className={`${s.message_time} ${cx}`}>
           <ChatTime time={props.messages.slice(-1)[0].date} />
         </div>
       </div>
