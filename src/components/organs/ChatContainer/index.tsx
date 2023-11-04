@@ -2,13 +2,11 @@ import ChatMessage from "@/components/molecules/chat/ChatMessage";
 import s from "./index.module.scss";
 import { ChatContainerProps, GroupedChat } from "./index.d";
 import { Chat } from "@/store/GlobalContext.d";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
+import { AuthContext } from "@/store/GlobalContext";
 
-// FIXME: 스크롤바 발생 안하는 문제 해결 필요
 export default function ChatContainer(props: ChatContainerProps) {
-  // TODO: 서버 연결 후 로직 수정
-  const isMyMessage = false;
-
+  const [, , userNameContext] = useContext(AuthContext);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -50,11 +48,12 @@ export default function ChatContainer(props: ChatContainerProps) {
   const messages = chatsToGroupChats(props.chats).map((groupedChat, index) => (
     <ChatMessage
       key={index}
-      isMine={isMyMessage}
+      isMine={userNameContext === groupedChat.userName}
       userName={groupedChat.userName}
       messages={groupedChat.messages}
     ></ChatMessage>
   ));
+  console.log(messages);
 
   return (
     <div className={s.chat_container} ref={containerRef}>

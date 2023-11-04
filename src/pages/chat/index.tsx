@@ -29,7 +29,7 @@ export default function Chat() {
       <Header></Header>
       <Popup></Popup>
       <div className={s.chat_content}>
-        <ChatListTemplate />
+        {/* <ChatListTemplate /> */}
         <ChatTemplate />
       </div>
     </div>

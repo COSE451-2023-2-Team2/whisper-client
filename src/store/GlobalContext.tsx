@@ -8,7 +8,7 @@ import {
   SocketConnectionContextType
 } from "./GlobalContext.d";
 
-export const AuthContext = createContext<AuthContextType>([false, () => null]);
+export const AuthContext = createContext<AuthContextType>([false, () => null, "", () => null]);
 export const ModalContext = createContext<ModalContextType>([null, () => null]);
 export const ChatContext = createContext<ChatContextType>([[], () => null]);
 export const SocketConnectionContext = createContext<SocketConnectionContextType>([
@@ -20,6 +20,7 @@ export const SocketConnectionContext = createContext<SocketConnectionContextType
 
 export default function GlobalStateContext(props: { children: React.ReactNode | null }) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [userNameContext, setUserNameContext] = useState<string>("");
   const [modalContext, setModalContext] = useState<ModalContextChildren>(null);
   const [chatContext, setChatContext] = useState<Chat[]>([]);
   const [isSocketConnected, setIsSocketConnected] = useState<boolean>(false);
@@ -30,7 +31,7 @@ export default function GlobalStateContext(props: { children: React.ReactNode | 
   };
 
   return (
-    <AuthContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
+    <AuthContext.Provider value={[isLoggedIn, setIsLoggedIn, userNameContext, setUserNameContext]}>
       <ModalContext.Provider value={[modalContext, setModalContext]}>
         <ChatContext.Provider value={[chatContext, storeChat]}>
           <SocketConnectionContext.Provider value={[socket, setSocket, isSocketConnected, setIsSocketConnected]}>

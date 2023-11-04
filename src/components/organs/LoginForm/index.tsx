@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import useSocket from "@/hooks/useSocket";
 
 export default function LoginForm() {
-  const [, setIsLoggedIn] = useContext(AuthContext);
+  const [, setIsLoggedIn, , setUserNameContext] = useContext(AuthContext);
   const [, setModal] = useContext(ModalContext);
   const router = useRouter();
 
@@ -33,6 +33,8 @@ export default function LoginForm() {
     if (success) {
       localStorage.setItem("isLoggedIn", "true");
       setIsLoggedIn(true);
+      setUserNameContext(userName);
+
       router.push({
         pathname: "/chat"
       });

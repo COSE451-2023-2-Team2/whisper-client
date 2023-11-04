@@ -1,7 +1,14 @@
-import { SocketConnectionContext } from "@/store/GlobalContext";
+import { ChatContext, SocketConnectionContext } from "@/store/GlobalContext";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 // NOTE: formatted with server type
+export type MessageReq = {
+  MessageType: string;
+  id: string;
+  message: string;
+  input?: string;
+};
+
 export type LoginReq = {
   MessageType: string;
   id: string;
@@ -17,6 +24,7 @@ export type RegisterReq = {
 
 export default function useSocket() {
   const [socket, setSocket, isSocketConnected, setIsSocketConnected] = useContext(SocketConnectionContext);
+  const [, storeChat] = useContext(ChatContext);
 
   const socketInitializer = useCallback(async () => {
     console.log("Starting new connection...");
@@ -27,10 +35,25 @@ export default function useSocket() {
       setSocket(socket);
       setIsSocketConnected(true);
     });
-  }, [setSocket, setIsSocketConnected]);
 
-  const requestSendMessage = (message: string) => {
-    socket?.send(message);
+    socket.addEventListener("message", (event: MessageEvent) => {
+      // FIXME 서버에서 input으로 내려오는 문제
+      const message = JSON.parse(event.data);
+      if (message.MessageType === "message") {
+        console.log(message.input);
+        storeChat({
+          userName: message.id,
+          message: message.message === undefined ? message.input : message.message,
+          date: new Date()
+        });
+      }
+    });
+  }, [setSocket, setIsSocketConnected, storeChat]);
+
+  const requestSendMessage = (req: MessageReq) => {
+    if (socket) {
+      socket.send(JSON.stringify(req));
+    }
   };
 
   const requestAuth = async (req: LoginReq | RegisterReq): Promise<boolean> => {
