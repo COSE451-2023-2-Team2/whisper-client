@@ -6,9 +6,7 @@ const baseChecker = (input: string) => {
   return input.length > 0 ? true : false;
 };
 
-export default function useInputValidation(
-  checker: ValidInputChecker = baseChecker
-) {
+export default function useInputValidation(checker: ValidInputChecker = baseChecker) {
   const [input, setInput] = useState("");
   const [isValidInput, setIsValidInput] = useState("default");
 
@@ -20,10 +18,12 @@ export default function useInputValidation(
 
   const checkIsValidInput = useCallback(
     (input: string) => {
-      if (checker(input)) {
-        setIsValidInput("true");
-      } else {
-        setIsValidInput("false");
+      if (input.length > 0) {
+        if (checker(input)) {
+          setIsValidInput("true");
+        } else {
+          setIsValidInput("false");
+        }
       }
     },
     [checker]
@@ -46,6 +46,6 @@ export default function useInputValidation(
   return {
     input,
     isValidInput,
-    inputChangeHandler,
+    inputChangeHandler
   };
 }

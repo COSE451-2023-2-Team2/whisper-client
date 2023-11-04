@@ -4,16 +4,21 @@ import { AuthContext, ModalContext } from "@/store/GlobalContext";
 import { Fragment, useContext } from "react";
 import s from "./index.module.scss";
 import InputField from "@/components/molecules/login/InputField";
-import ErrorModal from "@/components/popup/ErrorModal";
+import ErrorModal from "@/components/popup/MessageModal";
 import useInputValidation from "@/hooks/useInputValidation";
 import { useRouter } from "next/router";
+import useSocket from "@/hooks/useSocket";
 
 export default function LoginForm() {
-  const [, setIsLoggedIn] = useContext(AuthContext);
+  const [, setIsLoggedIn, , setUserNameContext] = useContext(AuthContext);
   const [, setModal] = useContext(ModalContext);
   const router = useRouter();
 
-  const { input: email, isValidInput: isValidEmail, inputChangeHandler: emailChangeHandler } = useInputValidation();
+  const {
+    input: userName,
+    isValidInput: isValidUserName,
+    inputChangeHandler: userNameChangeHandler
+  } = useInputValidation();
 
   const {
     input: password,
@@ -21,27 +26,34 @@ export default function LoginForm() {
     inputChangeHandler: passwordChangeHandler
   } = useInputValidation();
 
-  const submitHandler = () => {
-    localStorage.setItem("isLoggedIn", "true");
-    // TODO 이곳에 로그인 관련 로직 추가
-    setIsLoggedIn(true);
-    router.push({
-      pathname: "/chat"
-    });
-    // setModal(<ErrorModal error="login" />);
+  const { requestAuth } = useSocket();
+
+  const submitHandler = async () => {
+    const success = await requestAuth({ MessageType: "login", pw: password, id: userName });
+    if (success) {
+      localStorage.setItem("isLoggedIn", "true");
+      setIsLoggedIn(true);
+      setUserNameContext(userName);
+
+      router.push({
+        pathname: "/chat"
+      });
+    } else {
+      setModal(<ErrorModal messageType="login" />);
+    }
   };
 
   return (
     <div className={s.login_form}>
       <div className={s.login_input}>
         <InputField
-          id="email"
+          id="username"
           type="text"
-          label="Email"
-          placeholder="Enter your email address"
-          value={email}
-          isCorrect={isValidEmail === "default" || isValidEmail === "true"}
-          onChange={emailChangeHandler}
+          label="Username"
+          placeholder="Enter your username"
+          value={userName}
+          isCorrect={isValidUserName === "default" || isValidUserName === "true"}
+          onChange={userNameChangeHandler}
         ></InputField>
         <InputField
           id="password"
@@ -56,7 +68,7 @@ export default function LoginForm() {
       <div className={s.login_button}>
         <ButtonSubmit
           name="Login"
-          disabled={!(isValidEmail === "true" && isValidPassword === "true")}
+          disabled={!(isValidUserName === "true" && isValidPassword === "true")}
           onClick={submitHandler}
         ></ButtonSubmit>
       </div>
