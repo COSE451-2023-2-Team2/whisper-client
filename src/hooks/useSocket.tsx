@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 // NOTE: formatted with server type
 export type LoginReq = {
+  MessageType: string;
   id: string;
   pw: string;
 };
@@ -32,11 +33,7 @@ export default function useSocket() {
     socket?.send(message);
   };
 
-  const requestLogin = (req: LoginReq) => {
-    socket?.send(JSON.stringify(req));
-  };
-
-  const requestRegister = async (req: RegisterReq): Promise<boolean> => {
+  const requestAuth = async (req: LoginReq | RegisterReq): Promise<boolean> => {
     return new Promise((resolve) => {
       if (socket) {
         socket.send(JSON.stringify(req));
@@ -64,7 +61,6 @@ export default function useSocket() {
   return {
     isSocketConnected,
     requestSendMessage,
-    requestLogin,
-    requestRegister
+    requestAuth
   };
 }

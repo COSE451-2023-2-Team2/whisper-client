@@ -62,11 +62,11 @@ export default function RegisterForm(props: RegisterFormProps) {
     setIsRegisterFirstPage(false);
   };
 
-  const { requestRegister } = useSocket();
+  const { requestAuth } = useSocket();
 
   const submitHandler = async () => {
     if (isValidEmail === "true" && isValidPassword === "true" && isConfirmSame === "true") {
-      const success = await requestRegister({ MessageType: "register", email, pw: password, id: userName });
+      const success = await requestAuth({ MessageType: "register", email, pw: password, id: userName });
       if (success) {
         setModal(<ErrorModal messageType="register_success" />);
         setIsRegisterFirstPage(false);
