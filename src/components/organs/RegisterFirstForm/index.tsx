@@ -6,7 +6,7 @@ import s from "./index.module.scss";
 import { RegisterFirstFormProps } from "./index.d";
 import InputField from "@/components/molecules/login/InputField";
 import useInputValidation from "@/hooks/useInputValidation";
-import ErrorModal from "@/components/popup/ErrorModal";
+import ErrorModal from "@/components/popup/MessageModal";
 
 export default function RegisterFirstForm(props: RegisterFirstFormProps) {
   return (

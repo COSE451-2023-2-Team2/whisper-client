@@ -3,7 +3,7 @@ import RegisterFirstForm from "../RegisterFirstForm";
 import RegisterSecondForm from "../RegisterSecondForm";
 import useInputValidation from "@/hooks/useInputValidation";
 import { ModalContext } from "@/store/GlobalContext";
-import ErrorModal from "@/components/popup/ErrorModal";
+import ErrorModal from "@/components/popup/MessageModal";
 import useSocket from "@/hooks/useSocket";
 
 export interface RegisterFormProps {
@@ -68,10 +68,11 @@ export default function RegisterForm(props: RegisterFormProps) {
     if (isValidEmail === "true" && isValidPassword === "true" && isConfirmSame === "true") {
       const success = await requestRegister({ MessageType: "register", email, pw: password, id: userName });
       if (success) {
+        setModal(<ErrorModal messageType="register_success" />);
         setIsRegisterFirstPage(false);
         props.changeLoginState();
       } else {
-        setModal(<ErrorModal error="register" />);
+        setModal(<ErrorModal messageType="register_fail" />);
       }
     }
   };

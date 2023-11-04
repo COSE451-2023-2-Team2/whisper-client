@@ -4,7 +4,7 @@ import { AuthContext, ModalContext } from "@/store/GlobalContext";
 import { Fragment, useContext } from "react";
 import s from "./index.module.scss";
 import InputField from "@/components/molecules/login/InputField";
-import ErrorModal from "@/components/popup/ErrorModal";
+import ErrorModal from "@/components/popup/MessageModal";
 import useInputValidation from "@/hooks/useInputValidation";
 import { useRouter } from "next/router";
 
