@@ -56,5 +56,9 @@ export default function ChatContainer(props: ChatContainerProps) {
     ></ChatMessage>
   ));
 
-  return <div className={s.chat_container}>{messages}</div>;
+  return (
+    <div className={s.chat_container} ref={containerRef}>
+      {messages}
+    </div>
+  );
 }

@@ -1,5 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 
+// NOTE: formatted with server type
+
+export type LoginReq = {
+  id: string;
+  pw: string;
+};
+
+export type RegisterReq = {
+  email: string;
+  id: string;
+  pw: string;
+};
+
 export default function useSocket() {
   const [connected, setConnected] = useState<boolean>(false);
   const socketRef = useRef<WebSocket>();
@@ -27,9 +40,21 @@ export default function useSocket() {
     };
   };
 
-  const sendMessage = (message: string) => {
+  const requestSendMessage = (message: string) => {
     if (socketRef.current) {
       socketRef.current.send(message);
+    }
+  };
+
+  const requestLogin = (req: LoginReq) => {
+    if (socketRef.current) {
+      socketRef.current.send(JSON.stringify(req));
+    }
+  };
+
+  const requestRegister = (req: RegisterReq) => {
+    if (socketRef.current) {
+      socketRef.current.send(JSON.stringify(req));
     }
   };
 
@@ -39,6 +64,8 @@ export default function useSocket() {
 
   return {
     connected,
-    sendMessage
+    requestSendMessage,
+    requestLogin,
+    requestRegister
   };
 }

@@ -4,14 +4,9 @@ import LectureSelectField from "@/components/molecules/login/LectureSelectField"
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
 import s from "./index.module.scss";
 import useInputValidation from "@/hooks/useInputValidation";
+import { Lecture, RegisterSecondFormProps } from "./index.d";
 
-interface Lecture {
-  id: number;
-  title: string;
-  selected: boolean;
-}
-
-export default function RegisterSecondForm() {
+export default function RegisterSecondForm(props: RegisterSecondFormProps) {
   const [lectures, setLectures] = useState<Lecture[]>([]);
 
   const fetchLectures = async () => {
@@ -19,32 +14,11 @@ export default function RegisterSecondForm() {
     setLectures([{ id: 0, title: "COSE441", selected: false }]);
   };
 
-  const userNameChecker = (userName: string) => {
-    return userName.length > 0 ? true : false;
-  };
-
-  const {
-    input: userName,
-    isValidInput: isValidUserName,
-    inputChangeHandler: userNameChangeHandler,
-  } = useInputValidation(userNameChecker);
-
   const addLecture = (lectureId: number) => {
-    console.log(lectureId);
-    setLectures((prevLectures) =>
-      prevLectures.map((lecture) =>
-        lecture.id === lectureId
-          ? { ...lecture, selected: !lecture.selected }
-          : lecture
-      )
-    );
-  };
-
-  const confirmHandler = () => {
-    // TODO: 로직 작성
-    console.log(userName);
     console.log(lectures);
-    console.log("채팅 이동!");
+    setLectures((prevLectures) =>
+      prevLectures.map((lecture) => (lecture.id === lectureId ? { ...lecture, selected: !lecture.selected } : lecture))
+    );
   };
 
   useEffect(() => {
@@ -53,18 +27,16 @@ export default function RegisterSecondForm() {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <div className={s.register_input}>
         <InputField
           id="username"
           type="text"
           label="User name"
           placeholder="Enter your user name"
-          value={userName}
-          isCorrect={
-            isValidUserName === "default" || isValidUserName === "true"
-          }
-          onChange={userNameChangeHandler}
+          value={props.userName}
+          isCorrect={props.isValidUserName === "default" || props.isValidUserName === "true"}
+          onChange={props.userNameChangeHandler}
         ></InputField>
         <LectureSelectField
           label="Choose class"
@@ -75,10 +47,10 @@ export default function RegisterSecondForm() {
       <div className={s.register_button}>
         <ButtonSubmit
           name="Sign up"
-          disabled={!isValidUserName}
-          onClick={confirmHandler}
+          disabled={!(props.isValidUserName && lectures[0].selected === true)}
+          onClick={props.confirmHandler}
         ></ButtonSubmit>
       </div>
-    </Fragment>
+    </>
   );
 }
