@@ -4,6 +4,7 @@ import RegisterSecondForm from "../RegisterSecondForm";
 import useInputValidation from "@/hooks/useInputValidation";
 import { ModalContext } from "@/store/GlobalContext";
 import ErrorModal from "@/components/popup/ErrorModal";
+import useSocket from "@/hooks/useSocket";
 
 export interface RegisterFormProps {
   changeLoginState: () => void;
@@ -61,13 +62,17 @@ export default function RegisterForm(props: RegisterFormProps) {
     setIsRegisterFirstPage(false);
   };
 
-  const submitHandler = () => {
+  const { requestRegister } = useSocket();
+
+  const submitHandler = async () => {
     if (isValidEmail === "true" && isValidPassword === "true" && isConfirmSame === "true") {
-      // TODO: 서버 연결 로직 추가
-      console.log(email, password, userName);
-      console.log("서버에 회원가입 요청 전송!");
-      const result = true;
-      result ? setIsRegisterFirstPage(false) : setModal(<ErrorModal error="register" />);
+      const success = await requestRegister({ MessageType: "register", email, pw: password, id: userName });
+      if (success) {
+        setIsRegisterFirstPage(false);
+        props.changeLoginState();
+      } else {
+        setModal(<ErrorModal error="register" />);
+      }
     }
   };
 

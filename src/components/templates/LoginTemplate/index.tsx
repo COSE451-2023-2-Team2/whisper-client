@@ -11,11 +11,7 @@ export default function LoginTemplate() {
   const [registerState, setRegisterState] = useState(false);
 
   const changeLoginState = () => {
-    if (registerState === false) {
-      setRegisterState(true);
-    } else {
-      setRegisterState(false);
-    }
+    setRegisterState(!registerState);
   };
 
   return (

@@ -1,69 +1,68 @@
-import { useEffect, useRef, useState } from "react";
+import { SocketConnectionContext } from "@/store/GlobalContext";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 // NOTE: formatted with server type
-
 export type LoginReq = {
   id: string;
   pw: string;
 };
 
 export type RegisterReq = {
+  MessageType: string;
   email: string;
   id: string;
   pw: string;
 };
 
 export default function useSocket() {
-  const [connected, setConnected] = useState<boolean>(false);
-  const socketRef = useRef<WebSocket>();
+  const [socket, setSocket, isSocketConnected, setIsSocketConnected] = useContext(SocketConnectionContext);
 
-  const socketInitializer = async () => {
+  const socketInitializer = useCallback(async () => {
+    console.log("Starting new connection...");
     const socket = new WebSocket("ws://localhost:8000");
-    socketRef.current = socket;
 
     socket.addEventListener("open", (event) => {
       console.log("Server connected!");
-      setConnected(true);
+      setSocket(socket);
+      setIsSocketConnected(true);
     });
-
-    socket.addEventListener("message", (event) => {
-      console.log("Message received!", event.data);
-    });
-
-    socket.addEventListener("close", (event) => {
-      console.log("Server disconnected!");
-      setConnected(false);
-    });
-
-    return () => {
-      socket.close();
-    };
-  };
+  }, [setSocket, setIsSocketConnected]);
 
   const requestSendMessage = (message: string) => {
-    if (socketRef.current) {
-      socketRef.current.send(message);
-    }
+    socket?.send(message);
   };
 
   const requestLogin = (req: LoginReq) => {
-    if (socketRef.current) {
-      socketRef.current.send(JSON.stringify(req));
-    }
+    socket?.send(JSON.stringify(req));
   };
 
-  const requestRegister = (req: RegisterReq) => {
-    if (socketRef.current) {
-      socketRef.current.send(JSON.stringify(req));
-    }
+  const requestRegister = async (req: RegisterReq): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (socket) {
+        socket.send(JSON.stringify(req));
+
+        socket.addEventListener("message", (event: MessageEvent) => {
+          const messageType = JSON.parse(event.data).MessageType;
+          if (messageType === "success") {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        });
+      } else {
+        resolve(false);
+      }
+    });
   };
 
   useEffect(() => {
-    socketInitializer();
-  }, []);
+    if (!isSocketConnected) {
+      socketInitializer();
+    }
+  }, [isSocketConnected, socketInitializer]);
 
   return {
-    connected,
+    isSocketConnected,
     requestSendMessage,
     requestLogin,
     requestRegister

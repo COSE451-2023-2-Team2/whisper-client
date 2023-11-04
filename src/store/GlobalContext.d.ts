@@ -12,3 +12,10 @@ export type Chat = {
 };
 
 export type ChatContextType = [Chat[], (chat: Chat) => void];
+
+export type SocketConnectionContextType = [
+  WebSocket | undefined,
+  Dispatch<SetStateAction<WebSocket | undefined>>,
+  boolean,
+  Dispatch<SetStateAction<boolean>>
+];
