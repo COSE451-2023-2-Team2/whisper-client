@@ -1,7 +1,7 @@
 import ChatInputField from "@/components/molecules/chat/ChatInputField";
 import s from "./index.module.scss";
 import ButtonFixedS from "@/components/atoms/button/ButtonFixedS";
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState, KeyboardEvent } from "react";
 import { AuthContext, ChatContext } from "@/store/GlobalContext";
 import { Chat } from "@/store/GlobalContext.d";
 import useSocket from "@/hooks/useSocket";
@@ -37,10 +37,17 @@ export default function ChatInputForm() {
     submitHandler();
   };
 
+  const keyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      submitHandler();
+    }
+  };
+
   return (
     <div className={s.chat_input_form}>
       <div className={s.chat_input_field}>
-        <ChatInputField value={message} onChange={inputChangeHandler}></ChatInputField>
+        <ChatInputField value={message} keyDown={keyDownHandler} onChange={inputChangeHandler}></ChatInputField>
       </div>
       <ButtonFixedS name="Send" onClick={clickHandler} disabled={message === ""}></ButtonFixedS>
     </div>

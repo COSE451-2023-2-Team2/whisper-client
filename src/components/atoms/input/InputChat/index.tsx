@@ -18,6 +18,7 @@ export default function InputChat(props: InputChatProps) {
       <input
         value={props.value}
         placeholder={props.placeholder}
+        onKeyDown={props.keyDown}
         onChange={props.onChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
