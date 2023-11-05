@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Whisper from "@/public/assets/Whisper.png";
-import Github from "@/public/assets/Github.png";
+import Github from "@/public/assets/github.png";
 
 import s from "./index.module.scss";
 
