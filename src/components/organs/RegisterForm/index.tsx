@@ -16,11 +16,11 @@ export default function RegisterForm(props: RegisterFormProps) {
 
   const emailChecker = useCallback((email: string) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailPattern.test(email);
+    return emailPattern.test(email) && email.length <= 20;
   }, []);
 
   const passwordChecker = useCallback((password: string) => {
-    return password.length >= 8 ? true : false;
+    return password.length >= 8 && password.length <= 20 ? true : false;
   }, []);
 
   const {
